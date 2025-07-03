@@ -75,7 +75,7 @@ const ProductCatalog = ({ products }) => {
               <div className="product-image">
                 {product.image ? (
                   <img 
-                    src={`http://localhost:3001${product.image}`} 
+                    src={`${process.env.NODE_ENV === 'production' ? '' : 'http://localhost:3001'}${product.image}`} 
                     alt={product.nameAr}
                     style={{ 
                       width: '100%', 

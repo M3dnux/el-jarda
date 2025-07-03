@@ -135,7 +135,7 @@ const AdminPanel = ({ products, onAddProduct, onUpdateProduct, onDeleteProduct, 
                   <div className="product-table-image">
                     {product.image ? (
                       <img 
-                        src={`http://localhost:3001${product.image}`} 
+                        src={`${process.env.NODE_ENV === 'production' ? '' : 'http://localhost:3001'}${product.image}`} 
                         alt={product.nameAr}
                         style={{ 
                           width: '50px', 

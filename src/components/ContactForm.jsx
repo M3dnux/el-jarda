@@ -42,7 +42,7 @@ const ContactForm = ({ onClose }) => {
     }
 
     try {
-      const response = await fetch('http://localhost:3001/api/contact', {
+      const response = await fetch(`${process.env.NODE_ENV === 'production' ? '' : 'http://localhost:3001'}/api/contact`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',

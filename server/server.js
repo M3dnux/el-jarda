@@ -602,8 +602,26 @@ app.get('/api/verify-token', authenticateToken, (req, res) => {
   res.json({ valid: true, user: req.user });
 });
 
-// Root endpoint
+// Serve static files from React build in production
+if (process.env.NODE_ENV === 'production') {
+  app.use(express.static(path.join(__dirname, '../dist')));
+  
+  // Serve React app for all non-API routes
+  app.get('*', (req, res) => {
+    // Skip if it's an API route
+    if (req.path.startsWith('/api/')) {
+      return res.status(404).json({ error: 'API endpoint not found' });
+    }
+    res.sendFile(path.join(__dirname, '../dist/index.html'));
+  });
+}
+
+// Root endpoint for development
 app.get('/', (req, res) => {
+  if (process.env.NODE_ENV === 'production') {
+    // This won't be reached in production due to the catch-all above
+    return res.sendFile(path.join(__dirname, '../dist/index.html'));
+  }
   res.json({
     message: 'El Jarda Gardening Business API',
     website: 'www.eljarda.com',
