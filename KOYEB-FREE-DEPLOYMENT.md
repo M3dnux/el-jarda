@@ -40,14 +40,14 @@ You'll need these environment variables in Koyeb:
 ### Required Variables:
 ```env
 # Database (Use your actual Koyeb PostgreSQL details)
-DATABASE_HOST=your-db-host.koyeb.app
+DATABASE_HOST=ep-red-queen-a2fi4ulj.eu-central-1.pg.koyeb.app
 DATABASE_USER=koyeb-adm
-DATABASE_PASSWORD=your-generated-password
+DATABASE_PASSWORD=npg_EOoCZqiS6de8
 DATABASE_NAME=koyebdb
 
 # Application
 NODE_ENV=production
-JWT_SECRET=your-super-secure-64-character-secret-key
+JWT_SECRET=966fd97860cc45bc13a0e599172d40373599eb31722b25ffb627964778bbb36246cadeaaa76acc732199db0845d204ee53b7be19e266e2aebdd177001f0833cb7799eed4668
 PORT=8000
 
 # Email (Keep your current Zoho settings)

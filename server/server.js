@@ -38,6 +38,8 @@ app.use(cors({
     const allowedOrigins = [
       'http://localhost:5173', 
       'http://localhost:5174',
+      'https://eljarda.com',
+      'https://www.eljarda.com'
       // Add your Koyeb app URL here when deployed
       // 'https://your-app-name.koyeb.app'
     ];
@@ -604,16 +606,21 @@ app.get('/api/verify-token', authenticateToken, (req, res) => {
 
 // Serve static files from React build in production
 if (process.env.NODE_ENV === 'production') {
-  app.use(express.static(path.join(__dirname, '../dist')));
-  
-  // Serve React app for all non-API routes
-  app.get('*', (req, res) => {
-    // Skip if it's an API route
-    if (req.path.startsWith('/api/')) {
-      return res.status(404).json({ error: 'API endpoint not found' });
+  // Serve static assets with proper headers
+  app.use(express.static(path.join(__dirname, '../dist'), {
+    maxAge: '1y',
+    etag: false,
+    setHeaders: (res, filePath) => {
+      // Set proper content types for different file types
+      if (filePath.endsWith('.js')) {
+        res.setHeader('Content-Type', 'application/javascript');
+      } else if (filePath.endsWith('.css')) {
+        res.setHeader('Content-Type', 'text/css');
+      } else if (filePath.endsWith('.html')) {
+        res.setHeader('Content-Type', 'text/html');
+      }
     }
-    res.sendFile(path.join(__dirname, '../dist/index.html'));
-  });
+  }));
 }
 
 // Root endpoint for development
@@ -655,6 +662,17 @@ app.use((error, req, res, next) => {
   }
   res.status(500).json({ error: error.message });
 });
+
+// Serve React app for all non-API routes (must be after all API routes)
+if (process.env.NODE_ENV === 'production') {
+  app.get('*', (req, res) => {
+    // Skip if it's an API route
+    if (req.path.startsWith('/api/')) {
+      return res.status(404).json({ error: 'API endpoint not found' });
+    }
+    res.sendFile(path.join(__dirname, '../dist/index.html'));
+  });
+}
 
 // Start server after database initialization
 const startServer = async () => {
