@@ -2,35 +2,23 @@
 
 A modern, bilingual (Arabic/French) gardening business website for El Jarda in Sfax, Tunisia. Built with React, Vite, and PostgreSQL.
 
-## Features
+## 🏪 Features
 
-### 🏪 Product Catalog
 - **Bilingual Support**: All content in Arabic and French
-- **Product Categories**: Lawn care, fertilizers, seeds, tools, plants, irrigation
-- **Search & Filter**: Easy product discovery
-- **PostgreSQL Database**: Reliable and scalable data storage
+- **Product Catalog**: Lawn care, fertilizers, seeds, tools, plants, irrigation
+- **Admin Panel**: Product management with authentication
+- **Contact Form**: Email integration for customer inquiries
+- **Responsive Design**: Mobile-friendly interface
 
-## Technology Stack
+## 🛠️ Technology Stack
 
 - **Frontend**: React 18, Vite, CSS Modules
 - **Backend**: Node.js, Express.js
-- **Database**: PostgreSQL (migrated from SQLite)
+- **Database**: PostgreSQL
 - **Authentication**: JWT, bcryptjs
-- **File Upload**: Multer
-- **Email**: Nodemailer
 - **Deployment**: Docker ready, Koyeb compatible
 
-## Database Migration
-
-This project has been **migrated from SQLite to PostgreSQL** for better production deployment on platforms like Koyeb. Key improvements:
-
-- ✅ Connection pooling for better performance
-- ✅ Async/await for all database operations
-- ✅ Production-ready SSL support
-- ✅ Environment-based configuration
-- ✅ Automatic schema initialization
-
-## Quick Start
+## 🚀 Quick Start
 
 ### Prerequisites
 - Node.js 18+
@@ -42,12 +30,53 @@ This project has been **migrated from SQLite to PostgreSQL** for better producti
    npm install
    ```
 
-2. **Configure PostgreSQL**
-   Update `.env` with your database credentials:
+2. **Configure Environment**
+   Copy `.env.example` to `.env` and update with your credentials:
    ```env
-   DATABASE_URL=postgresql://username:password@hostname:port/database_name
-   DB_HOST=localhost
-   DB_PORT=5432
+   DATABASE_HOST=your-postgres-host
+   DATABASE_USER=your-username
+   DATABASE_PASSWORD=your-password
+   DATABASE_NAME=your-database
+   JWT_SECRET=your-jwt-secret
+   ```
+
+3. **Run the application**
+   ```bash
+   npm run dev:all
+   ```
+
+## 📦 Deployment
+
+### Koyeb Deployment
+1. Set environment variables in Koyeb dashboard
+2. Connect your GitHub repository
+3. Deploy with automatic builds
+
+### Docker Deployment
+```bash
+docker build -t el-jarda .
+docker run -p 8000:8000 el-jarda
+```
+
+## 🔐 Admin Access
+
+- **Username**: admin  
+- **Password**: ElJarda2024!
+
+## 📧 Contact
+
+- **Website**: www.eljarda.com
+- **Email**: contact@eljarda.com
+- **Phone**: 26503701 / 40279250
+- **Location**: Chihia, Sfax, Tunisia
+
+## 📄 License
+
+This project is proprietary software for El Jarda gardening business.
+
+---
+
+**Built with ❤️ for El Jarda gardening business in Tunisia** 🇹🇳
    DB_NAME=el_jarda
    DB_USER=postgres
    DB_PASSWORD=your_password
