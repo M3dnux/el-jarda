@@ -18,7 +18,7 @@ const __filename = fileURLToPath(import.meta.url);
 const __dirname = dirname(__filename);
 
 const app = express();
-const PORT = process.env.PORT || 3001;
+const PORT = process.env.PORT || 8000;
 const JWT_SECRET = process.env.JWT_SECRET || 'your-super-secret-jwt-key-change-this-in-production';
 
 // Middleware
@@ -602,6 +602,20 @@ app.get('/api/verify-token', authenticateToken, (req, res) => {
   res.json({ valid: true, user: req.user });
 });
 
+// Root endpoint
+app.get('/', (req, res) => {
+  res.json({
+    message: 'El Jarda Gardening Business API',
+    website: 'www.eljarda.com',
+    email: 'contact@eljarda.com',
+    endpoints: {
+      health: '/api/health',
+      products: '/api/products',
+      admin: '/api/admin'
+    }
+  });
+});
+
 // Health check endpoint
 app.get('/api/health', (req, res) => {
   res.json({ 
@@ -632,8 +646,8 @@ const startServer = async () => {
     app.listen(PORT, '0.0.0.0', () => {
       console.log(`🌱 El Jarda Server running on port ${PORT}`);
       console.log(`📝 Admin access available`);
-      console.log(`🔗 API URL: http://localhost:${PORT}/api`);
-      console.log(`🏥 Health check: http://localhost:${PORT}/api/health`);
+      console.log(`🔗 API URL: http://0.0.0.0:${PORT}/api`);
+      console.log(`🏥 Health check: http://0.0.0.0:${PORT}/api/health`);
       console.log(`🌐 Website: www.eljarda.com`);
       console.log(`📧 Contact: contact@eljarda.com`);
     });
@@ -644,5 +658,20 @@ const startServer = async () => {
 };
 
 startServer();
+
+// Graceful shutdown handling for Koyeb
+process.on('SIGTERM', async () => {
+  console.log('🔄 Received SIGTERM, shutting down gracefully...');
+  console.log('🔄 Closing database connections...');
+  await Database.close();
+  process.exit(0);
+});
+
+process.on('SIGINT', async () => {
+  console.log('🔄 Received SIGINT, shutting down gracefully...');
+  console.log('🔄 Closing database connections...');
+  await Database.close();
+  process.exit(0);
+});
 
 export default app;
